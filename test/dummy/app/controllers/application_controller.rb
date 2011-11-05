@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-
+=begin
   protected
 
   # The following code must be injected from the gem:
@@ -11,5 +11,7 @@ class ApplicationController < ActionController::Base
 
   public
   before_filter :db_tier_select
+=end
+
 end
 
