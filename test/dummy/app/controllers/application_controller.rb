@@ -13,5 +13,7 @@ class ApplicationController < ActionController::Base
   before_filter :db_tier_select
 =end
 
+  acts_as_db_tier
+
 end
 
