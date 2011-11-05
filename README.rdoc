@@ -1,3 +1,29 @@
 = DbTier
 
 This project rocks and uses MIT-LICENSE.
+
+== Set Up
+
+Create +/config/initializers/db_tier.rb+
+
+=== Server/Deploy dependent (testing)
+
+<tt>
+test_config = { :adapter  => "sqlite3",
+                :database => server_dependent_database_selector(),
+                :pool     => 5,
+                :timeout  => 5000}
+DbTier::Config.init(test_config)
+</tt>
+
+=== Request dependent (client tiered)
+
+<tt>
+DbTier::Config.init do
+  # get some params/request related data
+  # calculate your desired configuration
+  # return a Hash or anything that
+  # ActiveRecord::Base.establish_connection accepts
+end
+</tt>
+
