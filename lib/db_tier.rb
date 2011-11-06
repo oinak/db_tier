@@ -7,9 +7,6 @@ module DbTier
 
   class Config
 
-    attr_reader :config_hash
-    attr_reader :config_method
-
     def self.init(config_hash=nil, &block)
       @@config_hash = config_hash
       @@config_method = block if block_given?
@@ -19,18 +16,16 @@ module DbTier
       @@config_hash || @@config_method.call
     end
 
-    def self.locals=(locals)
-      @@locals = locals
+    class<<self
+      attr_accessor :locals
+      attr_accessor :config_hash
+      attr_accessor :config_method
     end
 
-    def self.locals
-      @@locals
-    end
   end
 
   module ClassMethods
     def acts_as_db_tier
-      @db_tier_config = DbTier::Config.retrieve
 
       before_filter :tiered_connection
 
@@ -46,7 +41,7 @@ module DbTier
 
   module InstanceMethods
     def tiered_connection
-      DbTier::Config.locals=( {:request => request})
+      DbTier::Config.locals = {:request => request, :session => session}
       @db_tier_config = DbTier::Config.retrieve
       ActiveRecord::Base.establish_connection( @db_tier_config )
     end

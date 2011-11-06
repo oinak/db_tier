@@ -3,7 +3,7 @@ ActionController::Base.class_eval do
 end
 
 test_config = {:adapter  => "sqlite3",
-               :database => "/home/fernando/src/db_tier/test/dummy/db/test.sqlite3", 
+               :database => "/home/fernando/src/db_tier/test/dummy/db/development.sqlite3",
                :pool     => 1,
                :timeout  => 1000}
 
@@ -11,7 +11,7 @@ test_config = {:adapter  => "sqlite3",
 
  DbTier::Config.init do
    params = DbTier::Config.locals[:request].params
-    
+
    Rails.logger.debug("\nUser code called with params: #{params.inspect}\n")
    if params["db"]
      param_db = File.join(RAILS_ROOT,"db/#{params["db"]}.sqlite3")
